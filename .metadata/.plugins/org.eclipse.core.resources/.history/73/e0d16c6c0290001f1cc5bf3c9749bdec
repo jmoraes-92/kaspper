@@ -1,0 +1,60 @@
+package com.ibm.SisApp.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ibm.SisApp.model.DadosCadastroFuncionario;
+import com.ibm.SisApp.model.Funcionario;
+import com.ibm.SisApp.repository.FuncionarioRepository;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
+import jakarta.transaction.Transactional;
+
+@Controller
+@RequestMapping("/funcionario")
+public class FuncionarioController {
+
+	// private List<Funcionario> funcionarios = new ArrayList<>();
+	@Autowired
+	private FuncionarioRepository repository;
+
+	@GetMapping
+	public String carregarFormFuncionario() {
+		return "funcionario/formFuncionario"; // template cadFuncionario.html
+
+	}
+
+	@GetMapping("/listagem")
+	public String carregaPaginaListagem(Model model) {
+		model.addAttribute("lista", repository.findAll());
+		return "funcionario/listagem";
+	}
+
+	@PostMapping
+	@Transactional
+	public String cadastrarFuncionario(DadosCadastroFuncionario dados) {
+		var funcionario = new Funcionario(dados);
+		// funcionarios.add(funcionario);
+		repository.save(funcionario);
+		System.out.println("Funcionário Cadastrado");
+		return "redirect:/funcionario/listagem";
+
+	}
+
+	@DeleteMapping
+	@Transactional
+	public String removeFuncionario(Long id) {
+		repository.deleteById(id);
+		System.out.println("Funcionario EXCLUÍDO!");
+		return "redirect:/funcionario/listagem";
+	}
+
+}

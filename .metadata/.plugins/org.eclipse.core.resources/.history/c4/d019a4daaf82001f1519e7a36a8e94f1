@@ -1,0 +1,12 @@
+package com.ibm.SisApp.model;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class Funcionario {
+	private Long id;
+	private String nome;
+	private String funcao;
+	private String dtadm;
+	private double salario;
+}

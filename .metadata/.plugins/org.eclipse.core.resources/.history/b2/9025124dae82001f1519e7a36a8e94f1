@@ -1,0 +1,5 @@
+spring.application.name=SisApp
+
+spring.dataasource.url=
+spring.datasource.username=
+spring.datasource.password=
