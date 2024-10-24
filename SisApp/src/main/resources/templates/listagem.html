@@ -2,72 +2,86 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Funcionários</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Lista de Funcionários</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 </head>
 
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Lista de Funcionários</h1>
-        <a href="/funcionario" class="btn btn-success mb-3">Novo Funcionário</a>
+	<div class="container mt-5">
+		<h1 class="mb-4">Lista de Funcionários</h1>
 
-        <table class="table table-hover table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th>NOME</th>
-                    <th>Função</th>
-                    <th>Data Admissão</th>
-                    <th>Salário</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Loop para exibir os funcionários -->
-                <tr th:each="funcionario : ${lista}">
-                    <td th:text="${funcionario.nome}"></td>
-                    <td th:text="${funcionario.funcao}"></td>
-                    <td th:text="${funcionario.dtadm}"></td>
-                    <td th:text="${funcionario.salario}"></td>
-                    <td>
-                        <a th:href="@{/funcionario/formFuncionario(id=${funcionario.id})}" class="btn btn-warning btn-sm">Editar</a>
-                        <form th:action="@{/funcionario}" method="post" style="display:inline;">
-                            <input type="hidden" name="_method" value="delete">
-                            <input type="hidden" name="id" th:value="${funcionario.id}">
-                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+		<!-- Botão para adicionar um novo funcionário -->
+		<div class="mb-4">
+			<a href="/funcionario" class="btn btn-primary">Novo</a>
+		</div>
 
-        <!-- Paginação -->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${pagina.isFirst() ? 'disabled' : ''}">
-                    <a class="page-link" th:href="@{/funcionario/listagem(page=${pagina.number - 1})}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
+		<!-- Tabela de funcionários -->
+		<table id="funcionariosTable" class="table table-hover table-striped">
+			<thead class="table-dark">
+				<tr>
+					<th>NOME</th>
+					<th>Função</th>
+					<th>Data Admissão</th>
+					<th>Salário</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="funcionario : ${lista}">
+					<td th:text="${funcionario.nome}"></td>
+					<td th:text="${funcionario.funcao}"></td>
+					<td th:text="${funcionario.dtadm}"></td>
+					<td th:text="${funcionario.salario}"></td>
+					<td>
+						<a th:href="@{/funcionario/formFuncionario(id=${funcionario.id})}" class="btn btn-warning btn-sm">Editar</a>
+						<form th:action="@{/funcionario}" method="post" style="display:inline;">
+							<input type="hidden" name="_method" value="delete">
+							<input type="hidden" name="id" th:value="${funcionario.id}">
+							<button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
-                <li class="page-item" th:each="i : ${#numbers.sequence(0, pagina.totalPages - 1)}"
-                    th:classappend="${pagina.number == i ? 'active' : ''}">
-                    <a class="page-link" th:href="@{/funcionario/listagem(page=${i})}" th:text="${i + 1}">1</a>
-                </li>
+	<!-- Inclusão das bibliotecas -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 
-                <li class="page-item" th:classappend="${pagina.isLast() ? 'disabled' : ''}">
-                    <a class="page-link" th:href="@{/funcionario/listagem(page=${pagina.number + 1})}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+	<!-- Script para inicializar o DataTables e filtro -->
+	<script>
+		$(document).ready(function () {
+			// Inicializa o DataTable
+			const table = $('#funcionariosTable').DataTable({
+				"language": {
+					"lengthMenu": "Mostrando _MENU_ registros por página",
+					"zeroRecords": "Nada encontrado",
+					"info": "Mostrando página _PAGE_ de _PAGES_",
+					"infoEmpty": "Nenhum registro disponível",
+					"infoFiltered": "(filtrado de _MAX_ registros no total)",
+					"sLoadingRecords": "Carregando...",
+					"sProcessing": "Processando...",
+					"sSearch": "Pesquisar",
+					"oPaginate": {
+						"sNext": "Próximo",
+						"sPrevious": "Anterior",
+						"sFirst": "Primeiro",
+						"sLast": "Último"
+					}
+				}
+			});
 
-    <!-- Bootstrap JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+			// Pesquisa por nome e função
+			$('#filterInput').on('keyup', function () {
+				table.search(this.value).draw();
+			});
+		});
+	</script>
 </body>
 
 </html>
