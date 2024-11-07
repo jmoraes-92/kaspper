@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;SisApp/src/main/resources/templates/forms/CadFuncionario.html&apos; to &apos;cadFuncionario.html&apos;" description="Rename resource &apos;CadFuncionario.html&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/resources/templates/forms/CadFuncionario.html" name="cadFuncionario.html" stamp="1728082130287" updateReferences="true"/>
+</session>

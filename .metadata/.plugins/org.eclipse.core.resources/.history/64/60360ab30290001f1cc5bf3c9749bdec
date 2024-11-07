@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{template.html}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Lista de funcionários</title>
+
+</head>
+
+<body>
+	<div layout:fragment="conteudo">
+		<div class="container">
+			<h1>Listas de funcionario</h1>
+			<a href="/funcionario">Novo</a>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>NOME</th>
+						<th>Função</th>
+						<th>Data Admissão</th>
+						<th>Salário</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="funcionario : ${lista}">
+						<td th:text="${funcionario.nome}"></td>
+						<td th:text="${funcionario.funcao}"></td>
+						<td th:text="${funcionario.dtadm}"></td>
+						<td th:text="${funcionario.salario}"></td>
+						<td>
+
+							<a th:href="@{/funcionario/formFuncionario(id=${funcionario.id})}">Editar</a>
+
+							<form action="/funcionario" method="post">
+								<input type="hidden" name="_method" value="delete">
+								<input type="hidden" name="id" th:value="${funcionario.id}">
+
+								<input type="submit" value="Excluir">
+							</form>
+
+
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>

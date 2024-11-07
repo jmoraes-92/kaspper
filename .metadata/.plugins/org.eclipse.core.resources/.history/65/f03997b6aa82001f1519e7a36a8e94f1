@@ -1,0 +1,5 @@
+package com.ibm.SisApp.model;
+
+public class DadosCadastroFuncionario {
+
+}

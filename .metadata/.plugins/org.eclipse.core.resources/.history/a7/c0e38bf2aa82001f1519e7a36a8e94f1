@@ -1,0 +1,26 @@
+package com.ibm.SisApp.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ibm.SisApp.model.DadosCadastroFuncionario;
+
+@Controller
+@RequestMapping("/funcionario")
+public class FuncionarioController {
+	
+	@GetMapping
+	public String carregarFormFuncionario() {
+		return "forms/CadFuncionario"; // template cadFuncionario.html
+		
+	}
+	
+	@PostMapping
+	public String cadastrarFuncionario(DadosCadastroFuncionario dados) {
+		return "";
+		
+	}
+
+}

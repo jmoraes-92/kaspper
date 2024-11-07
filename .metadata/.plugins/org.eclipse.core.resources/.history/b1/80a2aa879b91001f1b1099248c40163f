@@ -1,0 +1,20 @@
+package com.ibm.SisApp.service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import com.ibm.SisApp.model.Funcionario;
+
+public interface FuncionarioService {
+
+	// Método para listar funcionários com paginação
+	Page<Funcionario> listarTodos(Pageable pageable);
+
+	// Buscar um funcionário
+	Funcionario buscarPorId(Long id);
+
+	// Salvar um novo funcionário
+	Funcionario salvar(Funcionario funcionario);
+
+	// Excluir um funcionário
+	void excluir(Long id);
+}
