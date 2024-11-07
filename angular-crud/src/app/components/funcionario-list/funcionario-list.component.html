@@ -1,0 +1,30 @@
+<!-- src/app/components/funcionario-list/funcionario-list.component.html -->
+<div>
+    <h2>Lista de Funcionários</h2>
+     <table>
+       <thead>
+         <tr>
+           <th>ID</th>
+           <th>Nome</th>
+           <th>Função</th>
+           <th>Data de Admissão</th>
+           <th>Salário</th>
+           <th>Ações</th>
+         </tr>
+       </thead>
+       <tbody>
+         <tr *ngFor="let funcionario of funcionarios">
+           <td>{{ funcionario.id }}</td>
+           <td>{{ funcionario.nome }}</td>
+           <td>{{ funcionario.funcao }}</td>
+           <td>{{ funcionario.dataAdmissao }}</td>
+           <td>{{ funcionario.salario | currency:'BRL' }}</td>
+           <td>
+             <button (click)="deletarFuncionario(funcionario.id)">Deletar</button>
+             <button [routerLink]="['/funcionario/edit', funcionario.id]">Editar</button>
+           </td>
+         </tr>
+       </tbody>
+     </table>
+     <button [routerLink]="['/funcionario/new']">Adicionar Novo Funcionário</button>
+    </div>
